@@ -13,11 +13,13 @@
                         <a class="nav-link active" aria-current="page" href="/">products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">cart</a>
+                        <a class="nav-link active" aria-current="page" href="/cart">cart</a>
                     </li>
+                    {{#if user}}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">orders</a>
                     </li>
+                    {{/if}}
                 </ul>
                 <div class="dropdown ml-auto">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
