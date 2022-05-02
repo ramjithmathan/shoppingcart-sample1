@@ -56,7 +56,9 @@ router.get('/logout',(req,res)=>{
   req.session.destroy()
   res.redirect('/')
 })
-router.get('/cart',veryfyLogin,(req,res)=>{
+router.get('/cart',veryfyLogin,async(req,res)=>{
+  let products=await userHelpers.getCartProducts(req.session.user._id)
+  console.log(products)
   res.render('user/cart')
 })
 router.get('/add-to-cart/:id',veryfyLogin,(req,res)=>{
