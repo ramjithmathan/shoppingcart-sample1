@@ -139,12 +139,13 @@ module.exports = {
                         {
                             $inc: { 'products.$.quantity': count }
                         }).then((response) => {
-                            resolve(true)
+                            resolve({status:true})
                         })
             }
         })
     },
     getTotalAmount:(userId)=>{
+        console.log('Userid',userId)
         return new Promise(async (resolve, reject) => {
             let total= await db.get().collection(collection.CART_COLLECTION).aggregate([
                 {
