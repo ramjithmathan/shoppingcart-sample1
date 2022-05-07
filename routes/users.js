@@ -1,6 +1,7 @@
 const { response } = require('express');
 var express = require('express');
 const isEligibleRequest = require('express-fileupload/lib/isEligibleRequest');
+const async = require('hbs/lib/async');
 const productHelpers = require('../helper/product-helpers');
 var router = express.Router();
 var productHelper=require('../helper/product-helpers')
@@ -75,6 +76,10 @@ router.post('/change-product-quantity',(req,res,next)=>{
   userHelpers.changeProductQuantity(req.body).then((response)=>{
     res.json(response)
   })
+})
+router.get('/place-order',veryfyLogin,async(req,res)=>{
+  let total=await userHelpers.getTotalAmount(req.session.user._id)
+  res.render('user/place-order',{total})
 })
 
 module.exports = router;
