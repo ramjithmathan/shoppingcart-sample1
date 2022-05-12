@@ -5,6 +5,11 @@ const async = require('hbs/lib/async');
 const { disabled } = require('express/lib/application');
 const { response } = require('express');
 var objectId = require('mongodb').ObjectId
+const Razorpay=require('razorpay')
+var instance = new Razorpay({ 
+   key_id: 'rzp_test_QBhTbucUQpIEt7',  
+   key_secret: 'EdYZhIBAy4psCAGXdxhcODXT', 
+});
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -205,7 +210,7 @@ module.exports = {
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
                 db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
-                resolve()
+                resolve(response.insertedId)
             })
         })
     },
@@ -255,6 +260,19 @@ module.exports = {
             ]).toArray()
             console.log(orderItems)
             resolve(orderItems)
+        })
+    },
+    generateRazorpay:(orderId,total)=>{
+        return new Promise ((resolve,reject)=>{
+            var options ={
+                amount: total,
+                currency: "INR",
+                receipt: ""+orderId
+            };
+            instance.orders.create(options,function(err,order){
+                console.log("new order :",order);
+                resolve(order)
+            })
         })
     }
 }
