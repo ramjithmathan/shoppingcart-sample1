@@ -66,7 +66,7 @@ function razorPayment(order){
         alert(response.razorpay_payment_id);
         alert(response.razorpay_order_id);
         alert(response.razorpay_signature);
-        verifyPayment(response,oder)
+        verifyPayment(response,order)
     },
     "prefill": {
         "name": "Gaurav Kumar",
@@ -80,9 +80,10 @@ function razorPayment(order){
         "color": "#3399cc"
     }
 };
-}
 var rzp1 = new Razorpay(options);
 rzp1.open();
+}
+
 function verifyPayment(payment,order){
     $.ajax({
         url:'/verify-payment',
